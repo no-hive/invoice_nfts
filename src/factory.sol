@@ -28,4 +28,23 @@ contract Factory {
     function updateUserDataEncryptedAddress(string memory _newEncryptedAddress) external {
         userDataMapping[msg.sender].encryptedAddress = _newEncryptedAddress;
     }
+
+    // =============================
+    // What to implement:
+    //
+    // 1. Create a transfer process:
+    //    - deploy a new child contract
+    //    - add an enum to track transfer statuses
+    //    - pass the following data to the child contract:
+    //        * transfer amount
+    //        * sender address
+    //        * admin address
+    //
+    // 2. Allow the child contract to update transfer statuses.
+    //
+    // 3. Connect to the NFT contract and mint NFTs
+    //    when the transfer status becomes `Complete`.
+    //
+    // 4. Allow cancellation of unfinished transfers.
+    // =============================
 }
