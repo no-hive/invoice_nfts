@@ -1,30 +1,37 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-//import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
+// import interface for FACTORY_ADDRESS contract
 
 // this contract is supposed to be built via factory.sol
 // it serves as one-time transfer intermediary
 contract Child {
-    //    using SafeERC20 for IERC20;
+    using SafeERC20 for IERC20;
+
+    bool transferMade;
+
     address public immutable ADMIN_ADDRESS;
 
     uint256 public immutable TRANSFER_SUM;
 
     address public immutable USDT_ADDRESS = address(0);
 
+    address public immutable FACTORY_ADDRESS = address(1);
+
     constructor(address _adminAddress, uint256 _transferSum) {
         ADMIN_ADDRESS = _adminAddress;
         TRANSFER_SUM = _transferSum;
     }
 
-
-  function Deposit(uint256 amount, address recipient) external {
-        require(amount = TRANSFER_SUM, "Amount must be greater than zero");
-
+    function Deposit(uint256 amount) external {
+        require(transferMade == true, "Transfer already made");
+        require(amount == TRANSFER_SUM, "Deposit the right amount");
         IERC20(USDT_ADDRESS).safeTransferFrom(msg.sender, ADMIN_ADDRESS, amount);
-
-  }
+        transferMade = true;
+        FACTORY_ADDRESS.updateStatus();
+    }
 
     // FALLBACK function is vital here
     // Simple transfer flow:
