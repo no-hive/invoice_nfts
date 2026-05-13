@@ -37,7 +37,7 @@ contract Child {
     }
 
     function Deposit(uint256 amount) external {
-        require(transferMade == true, "Transfer already made");
+        require(transferMade == false, "Transfer already made");
         require(amount == TRANSFER_SUM, "Deposit the right amount");
         // IERC20(USDT_ADDRESS).safeTransferFrom(msg.sender, ADMIN_ADDRESS, amount);
         transferMade = true;

@@ -25,14 +25,29 @@ contract FactoryTest is Test {
         vm.stopPrank();
     }
 
-function testChildAdmin() public {
-    vm.startPrank(ADMIN);
-    factory.createTransfer(TEST_AMOUNT);
-    (,,, address childAddr) = factory.transferIdMapping(ADMIN, 0);
-    Child child = Child(childAddr);
-    assertEq(child.ADMIN_ADDRESS(), ADMIN);
-    vm.stopPrank();
-}
+    function testChildAdmin() public {
+        vm.startPrank(ADMIN);
+        factory.createTransfer(TEST_AMOUNT);
+        (,,, address childAddr) = factory.transferIdMapping(ADMIN, 0);
+        Child child = Child(childAddr);
+        assertEq(child.ADMIN_ADDRESS(), ADMIN);
+        vm.stopPrank();
+    }
+
+    // unction testChildDeploysAndWorks() public {
+    //  vm.startPrank(ADMIN);
+
+    // factory.createTransfer(TEST_AMOUNT);
+
+    //  (,,, address childAddr) = factory.transferIdMapping(ADMIN, 0);
+
+    //   childAddr.deposit(TEST_AMOUNT);
+
+    //       (,bool completed,,) = factory.transferIdMapping(ADMIN, 0);
+    //       assertEq(completed, true);
+
+    //    vm.stopPrank();
+    //}
 
     //   function testEncryptedDataUpdate public {
     //      vm.startPrank(ADMIN);

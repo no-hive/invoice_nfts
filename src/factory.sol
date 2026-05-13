@@ -4,23 +4,30 @@ pragma solidity ^0.8.4;
 import {Child} from "src/child.sol";
 
 contract Factory {
-    // =============================
-    // Personal data storage
-    // =============================
+    // ============================================================
+    //                  USER ENCRYPTED DATA
+    // ============================================================
 
-    // this data will be replaced with encrypted personal data of the user
+    // Stores encrypted personal data for a user.
+    // These values are expected to be encrypted off-chain before submission.
     struct UserData {
         string encryptedName;
         string encryptedAddress;
     }
 
-    // that's how we connect personal address with personal encrypted data
+    // Maps user address to their encrypted personal data.
     mapping(address => UserData) userDataMapping;
 
-    // =============================
-    // Transfers data
-    // =============================
+    // ============================================================
+    //                TRANSFER / CHILD CONTRACT DATA
+    // ============================================================
 
+    // This struct represents a single transfer cycle.
+    // Each transfer is linked to a dedicated child contract.
+    // created      - indicates that the Child contract was deployed
+    // completed    - indicates that the transfer is executed (updated by child contract)
+    // nftMinted    - indicates whether NFT reward was minted (future use)
+    // childAddress - deployed Child contract address responsible for execution
     struct Transfer {
         bool Created;
         bool Completed;
@@ -28,24 +35,35 @@ contract Factory {
         address ChildContractAddress;
     }
 
+    // Stores all transfers per user. This mapping contains all the info
+    // that is needed for transfer data management.
     mapping(address => mapping(uint256 => Transfer)) public transferIdMapping;
 
+    // Tracks per-user nonce used for generating unique transfer IDs.
+    // Ensures each transfer has a unique identifier per wallet.
     mapping(address => uint256) public idNonce;
 
-    // =============================
-    // Personal data management functions
-    // =============================
+    // ============================================================
+    //                   USER ENCRYPTED DATA MANAGEMENT
+    // ============================================================
 
-    // let User update encrypted name
+    // Updates encrypted username for caller.
     function updateUserDataEncryptedName(string memory _newEncryptedName) external {
         userDataMapping[msg.sender].encryptedName = _newEncryptedName;
     }
 
-    // let User update encrypted address
+    // @notice Updates encrypted address for caller.
     function updateUserDataEncryptedAddress(string memory _newEncryptedAddress) external {
         userDataMapping[msg.sender].encryptedAddress = _newEncryptedAddress;
     }
 
+    // ============================================================
+    //              TRANSFER / CHILD CONTRACT DEPLOYMENT
+    // ============================================================
+
+    // Creates a new transfer and deploys a dedicated Child contract.
+    // Each transfer is represented by its own Child contract instance.
+    // @param _transferSum Amount is a value expected in the transfer.
     function createTransfer(uint256 _transferSum) public {
         uint256 nonce_ = idNonce[msg.sender];
         idNonce[msg.sender]++;
@@ -55,30 +73,21 @@ contract Factory {
         transferIdMapping[_adminAddress][nonce_].Created = true;
     }
 
+    // ============================================================
+    //               TRANSFER / CHILD CONTRACT UPDATE
+    // ============================================================
+
+    // Called by Child contract after successful execution.
+    // Only the authorized Child contract can update its transfer status.
     function updateStatus(address _adminAddress, uint256 _nonce) public {
         require(msg.sender == transferIdMapping[_adminAddress][_nonce].ChildContractAddress, "Not permitted");
         transferIdMapping[_adminAddress][_nonce].Completed = true;
-        // should take address and match it with the status enum and update the status.
-        // then  should mint nft to admin account using encrypted details.
-        //
+        // Future logic:
+        // - trigger NFT minting based on completion state
     }
 
-    // =============================
-    // What to implement:
-    //
-    // 1. Create a transfer process:
-    //    - deploy a new child contract
-    //    - add an enum to track transfer statuses
-    //    - pass the following data to the child contract:
-    //        * transfer amount
-    //        * sender address
-    //        * admin address
-    //
-    // 2. Allow the child contract to update transfer statuses.
-    //
-    // 3. Connect to the NFT contract and mint NFTs
-    //    when the transfer status becomes `Complete`.
-    //
-    // 4. Allow cancellation of unfinished transfers.
-    // =============================
+    // ============================================================
+    // Future logic:
+    // trigger NFT minting based on completion state
+    // ============================================================
 }
