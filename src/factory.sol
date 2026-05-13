@@ -56,6 +56,7 @@ contract Factory {
     }
 
     function updateStatus(address _adminAddress, uint256 _nonce) public {
+        require(msg.sender == transferIdMapping[_adminAddress][_nonce].ChildContractAddress, "Not permitted");
         transferIdMapping[_adminAddress][_nonce].Completed = true;
         // should take address and match it with the status enum and update the status.
         // then  should mint nft to admin account using encrypted details.
