@@ -34,7 +34,7 @@ contract Child {
         require(amount == TRANSFER_SUM, "Deposit the right amount");
         IERC20(USDT_ADDRESS).safeTransferFrom(msg.sender, ADMIN_ADDRESS, amount);
         transferMade = true;
-        FACTORY_ADDRESS.updateStatus();
+        FACTORY_ADDRESS.updateStatus(ADMIN_ADDRESS, ID_NONCE);
     }
 
     // FALLBACK function is vital here

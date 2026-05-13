@@ -53,9 +53,10 @@ contract Factory {
         transferIdMapping[_adminAddress][nonce_].Created = true;
     }
 
-    function updateStatus() public {
+    function updateStatus(address _adminAddress, uint256 _nonce) public {
+        transferIdMapping[_adminAddress][_nonce].Completed = true;
         // should take address and match it with the status enum and update the status.
-        // then it should mint nft to admin account using encrypted details.
+        // then  should mint nft to admin account using encrypted details.
         //
     }
 
