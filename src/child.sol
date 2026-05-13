@@ -9,6 +9,11 @@ import "src/factory.sol";
 
 // this contract is supposed to be built via factory.sol
 // it serves as one-time transfer intermediary
+
+interface IFactory {
+    function updateStatus(address _adminAddress, uint256 _nonce) external;
+}
+
 contract Child {
     using SafeERC20 for IERC20;
 
@@ -34,9 +39,9 @@ contract Child {
     function Deposit(uint256 amount) external {
         require(transferMade == true, "Transfer already made");
         require(amount == TRANSFER_SUM, "Deposit the right amount");
-        IERC20(USDT_ADDRESS).safeTransferFrom(msg.sender, ADMIN_ADDRESS, amount);
+        // IERC20(USDT_ADDRESS).safeTransferFrom(msg.sender, ADMIN_ADDRESS, amount);
         transferMade = true;
-        //    FACTORY_ADDRESS.updateStatus(ADMIN_ADDRESS, ID_NONCE);
+        IFactory(FACTORY_ADDRESS).updateStatus(ADMIN_ADDRESS, ID_NONCE);
     }
 
     // FALLBACK function is vital here
