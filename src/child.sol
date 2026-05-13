@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 // this contract is supposed to be built via factory.sol
 // it serves as one-time transfer intermediary
-contract Child {
+contract child {
     using SafeERC20 for IERC20;
 
     bool transferMade;

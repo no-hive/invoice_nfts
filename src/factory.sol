@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+import "./child.sol";
+
 contract Factory {
     // =============================
     // Personal data storage
@@ -48,8 +50,8 @@ contract Factory {
         uint256 nonce_ = idNonce[msg.sender];
         idNonce[msg.sender]++;
         address _adminAddress = msg.sender;
-        // ChildContractAddress = new contract address (_adminAddress, _transferSum, nonce_);
-        // transferIdMapping[_adminAddress[nonce_]].ChildContractAddress = _ChildContractAddress;
+        child c = new child (_adminAddress, _transferSum, nonce_);
+        transferIdMapping[_adminAddress][nonce_].ChildContractAddress = address(c);
         transferIdMapping[_adminAddress][nonce_].Created = true;
     }
 
