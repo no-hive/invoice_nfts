@@ -16,6 +16,21 @@ contract Factory {
     mapping(address => UserData) userDataMapping;
 
     // =============================
+    // Transfers data
+    // =============================
+
+    struct Transfer {
+        bool Created;
+        bool Completed;
+        bool NFTMinted;
+        address ChildContractAddress;
+    }
+
+    mapping(address => mapping(uint256 => Transfer)) transferIdMapping;
+
+    mapping(address => uint256) idNonce;
+
+    // =============================
     // Personal data management functions
     // =============================
 
@@ -27,6 +42,21 @@ contract Factory {
     // let User update encrypted address
     function updateUserDataEncryptedAddress(string memory _newEncryptedAddress) external {
         userDataMapping[msg.sender].encryptedAddress = _newEncryptedAddress;
+    }
+
+    function createTransfer(uint256 _transferSum) public {
+        uint256 nonce_ = idNonce[msg.sender];
+        idNonce[msg.sender]++;
+        address _adminAddress = msg.sender;
+        // ChildContractAddress = new contract address (_adminAddress, _transferSum, nonce_);
+        // transferIdMapping[_adminAddress[nonce_]].ChildContractAddress = _ChildContractAddress;
+        transferIdMapping[_adminAddress][nonce_].Created = true;
+    }
+
+    function updateStatus() public {
+        // should take address and match it with the status enum and update the status.
+        // then it should mint nft to admin account using encrypted details.
+        //
     }
 
     // =============================

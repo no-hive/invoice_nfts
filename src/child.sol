@@ -14,15 +14,19 @@ contract Child {
 
     address public immutable ADMIN_ADDRESS;
 
+    uint256 public immutable ID_NONCE;
+
     uint256 public immutable TRANSFER_SUM;
 
     address public immutable USDT_ADDRESS = address(0);
 
-    address public immutable FACTORY_ADDRESS = address(1);
+    address public immutable FACTORY_ADDRESS;
 
-    constructor(address _adminAddress, uint256 _transferSum) {
+    constructor(address _adminAddress, uint256 _transferSum, uint256 _idNonce) {
         ADMIN_ADDRESS = _adminAddress;
         TRANSFER_SUM = _transferSum;
+        ID_NONCE = _idNonce;
+        FACTORY_ADDRESS = msg.sender;
     }
 
     function Deposit(uint256 amount) external {
