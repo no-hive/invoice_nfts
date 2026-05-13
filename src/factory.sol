@@ -50,7 +50,7 @@ contract Factory {
         uint256 nonce_ = idNonce[msg.sender];
         idNonce[msg.sender]++;
         address _adminAddress = msg.sender;
-        child c = new child (_adminAddress, _transferSum, nonce_);
+        child c = new child(_adminAddress, _transferSum, nonce_);
         transferIdMapping[_adminAddress][nonce_].ChildContractAddress = address(c);
         transferIdMapping[_adminAddress][nonce_].Created = true;
     }
