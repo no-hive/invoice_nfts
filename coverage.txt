@@ -1,7 +1,7 @@
 Compiling 50 files with Solc 0.8.35
 installing solc version "0.8.35"
 Successfully installed solc 0.8.35
-Solc 0.8.35 finished in 1.03s
+Solc 0.8.35 finished in 1.02s
 Compiler run successful with warnings:
 Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
    --> lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol:125:29:
@@ -42,9 +42,9 @@ Ran 5 tests for test/test.t.sol:FactoryTest
 [PASS] testChildDeploysAndWorks() (gas: 501521)
 [PASS] testChildTransferIsCreated() (gas: 452160)
 [PASS] testNameChanges() (gas: 48190)
-Suite result: ok. 5 passed; 0 failed; 0 skipped; finished in 2.11ms (2.43ms CPU time)
+Suite result: ok. 5 passed; 0 failed; 0 skipped; finished in 1.76ms (2.95ms CPU time)
 
-Ran 1 test suite in 8.83ms (2.11ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)
+Ran 1 test suite in 8.25ms (1.76ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)
 
 ╭-----------------------+-----------------+-----------------+---------------+---------------╮
 | File                  | % Lines         | % Statements    | % Branches    | % Funcs       |
