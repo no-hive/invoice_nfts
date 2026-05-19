@@ -49,7 +49,7 @@ contract Factory {
     address public immutable USDT_ADDRESS;
 
     constructor(address _USDT_address) {
-        _USDT_address = USDT_ADDRESS;
+        USDT_ADDRESS = _USDT_address;
     }
 
     // ============================================================

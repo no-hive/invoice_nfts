@@ -42,7 +42,7 @@ contract Child {
         TRANSFER_SUM = _transferSum;
         ID_NONCE = _idNonce;
         FACTORY_ADDRESS = msg.sender;
-        _USDTAddress = USDT_ADDRESS;
+        USDT_ADDRESS = _USDTAddress;
     }
 
     // This function is called by the payer to complete the transfer.
