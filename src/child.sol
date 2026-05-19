@@ -7,7 +7,7 @@ import "src/factory.sol";
 
 // Interface for interaction with the parent Factory contract.
 interface IFactory {
-    function updateStatus(address _adminAddress, uint256 _nonce) external;
+    function updateStatus(address _adminAddress, uint256 _nonce, uint256 _amount) external;
 }
 
 // This contract is intended to be deployed only via Factory.sol.
@@ -58,6 +58,6 @@ contract Child {
         require(amount == TRANSFER_SUM, "Deposit the right amount");
         IERC20(USDT_ADDRESS).safeTransferFrom(msg.sender, ADMIN_ADDRESS, amount);
         transferMade = true;
-        IFactory(FACTORY_ADDRESS).updateStatus(ADMIN_ADDRESS, ID_NONCE);
+        IFactory(FACTORY_ADDRESS).updateStatus(ADMIN_ADDRESS, ID_NONCE, TRANSFER_SUM);
     }
 }

@@ -5,6 +5,15 @@ import {Child} from "src/child.sol";
 
 contract Factory {
     // ============================================================
+    //                         EVENTS
+    // ============================================================
+
+    event encryptedNameChanged(address changer, string new_name);
+    event encryptedAddressChanged(address changer, string new_address);
+    event transferCreated(address user, uint256 nonce, uint256 amount);
+    event transferCompleted(address user, uint256 nonce, uint256 amount);
+
+    // ============================================================
     //                  USER ENCRYPTED DATA
     // ============================================================
 
@@ -59,11 +68,13 @@ contract Factory {
     // Updates encrypted username for caller.
     function updateUserDataEncryptedName(string memory _newEncryptedName) external {
         userDataMapping[msg.sender].encryptedName = _newEncryptedName;
+        emit encryptedNameChanged(msg.sender, _newEncryptedName);
     }
 
     // @notice Updates encrypted address for caller.
     function updateUserDataEncryptedAddress(string memory _newEncryptedAddress) external {
         userDataMapping[msg.sender].encryptedAddress = _newEncryptedAddress;
+        emit encryptedAddressChanged(msg.sender, _newEncryptedAddress);
     }
 
     // ============================================================
@@ -80,6 +91,7 @@ contract Factory {
         Child c = new Child(_adminAddress, _transferSum, nonce_, USDT_ADDRESS);
         transferIdMapping[_adminAddress][nonce_].ChildContractAddress = address(c);
         transferIdMapping[_adminAddress][nonce_].Created = true;
+        emit transferCreated(_adminAddress, nonce_, _transferSum);
     }
 
     // ============================================================
@@ -88,8 +100,9 @@ contract Factory {
 
     // Called by Child contract after successful execution.
     // Only the authorized Child contract can update its transfer status.
-    function updateStatus(address _adminAddress, uint256 _nonce) public {
+    function updateStatus(address _adminAddress, uint256 _nonce, uint256 _amount) public {
         require(msg.sender == transferIdMapping[_adminAddress][_nonce].ChildContractAddress, "Not permitted");
         transferIdMapping[_adminAddress][_nonce].Completed = true;
+        emit transferCompleted(_adminAddress, _nonce, _amount);
     }
 }
