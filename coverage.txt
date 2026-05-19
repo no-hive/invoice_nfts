@@ -1,0 +1,61 @@
+Compiling 50 files with Solc 0.8.35
+installing solc version "0.8.35"
+Successfully installed solc 0.8.35
+Solc 0.8.35 finished in 1.03s
+Compiler run successful with warnings:
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol:125:29:
+    |
+125 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol:134:29:
+    |
+134 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecoverCalldata(hash, signature);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol:161:29:
+    |
+161 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, r, vs);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol:203:29:
+    |
+203 |         (address recovered, RecoverError error, bytes32 errorArg) = tryRecover(hash, v, r, s);
+    |                             ^^^^^^^^^^^^^^^^^^
+
+Warning (6335): "error" will be promoted to keyword in the future and will not be allowed as an identifier anymore.
+   --> lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol:273:26:
+    |
+273 |     function _throwError(RecoverError error, bytes32 errorArg) private pure {
+    |                          ^^^^^^^^^^^^^^^^^^
+
+Analysing contracts...
+Running tests...
+
+Ran 5 tests for test/test.t.sol:FactoryTest
+[PASS] testAddressChanges() (gas: 48125)
+[PASS] testChildAdmin() (gas: 475595)
+[PASS] testChildDeploysAndWorks() (gas: 501521)
+[PASS] testChildTransferIsCreated() (gas: 452160)
+[PASS] testNameChanges() (gas: 48190)
+Suite result: ok. 5 passed; 0 failed; 0 skipped; finished in 2.11ms (2.43ms CPU time)
+
+Ran 1 test suite in 8.83ms (2.11ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)
+
+╭-----------------------+-----------------+-----------------+---------------+---------------╮
+| File                  | % Lines         | % Statements    | % Branches    | % Funcs       |
++===========================================================================================+
+| script/deploy.s.sol   | 0.00% (0/5)     | 0.00% (0/3)     | 100.00% (0/0) | 0.00% (0/2)   |
+|-----------------------+-----------------+-----------------+---------------+---------------|
+| src/child.sol         | 100.00% (12/12) | 100.00% (10/10) | 50.00% (2/4)  | 100.00% (2/2) |
+|-----------------------+-----------------+-----------------+---------------+---------------|
+| src/example_token.sol | 100.00% (2/2)   | 100.00% (1/1)   | 100.00% (0/0) | 100.00% (1/1) |
+|-----------------------+-----------------+-----------------+---------------+---------------|
+| src/factory.sol       | 100.00% (20/20) | 100.00% (16/16) | 50.00% (1/2)  | 100.00% (5/5) |
+|-----------------------+-----------------+-----------------+---------------+---------------|
+| Total                 | 87.18% (34/39)  | 90.00% (27/30)  | 50.00% (3/6)  | 80.00% (8/10) |
+╰-----------------------+-----------------+-----------------+---------------+---------------╯
