@@ -52,7 +52,6 @@ contract Child {
     // After successful execution:
     // 1. The transfer is marked as completed locally, preventing any further deposits.
     // 2. The parent Factory contract is notified.
-    // 3. The Factory contract can later trigger NFT invoice minting.
     function Deposit(uint256 amount) external {
         require(transferMade == false, "Transfer already made");
         require(amount == TRANSFER_SUM, "Deposit the right amount");

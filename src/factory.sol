@@ -26,12 +26,10 @@ contract Factory {
     // Each transfer is linked to a dedicated child contract.
     // created      - indicates that the Child contract was deployed
     // completed    - indicates that the transfer is executed (updated by child contract)
-    // nftMinted    - indicates whether NFT reward was minted (future use)
     // childAddress - deployed Child contract address responsible for execution
     struct Transfer {
         bool Created;
         bool Completed;
-        bool NFTMinted;
         address ChildContractAddress;
     }
 
@@ -82,12 +80,6 @@ contract Factory {
     function updateStatus(address _adminAddress, uint256 _nonce) public {
         require(msg.sender == transferIdMapping[_adminAddress][_nonce].ChildContractAddress, "Not permitted");
         transferIdMapping[_adminAddress][_nonce].Completed = true;
-        // Future logic:
-        // - trigger NFT minting based on completion state
     }
 
-    // ============================================================
-    // Future logic:
-    // trigger NFT minting based on completion state
-    // ============================================================
 }
