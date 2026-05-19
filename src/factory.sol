@@ -42,6 +42,17 @@ contract Factory {
     mapping(address => uint256) public idNonce;
 
     // ============================================================
+    //                CONSTRUCTOR FOR USDT ADDRESS MANAGEMENT
+    // ============================================================
+
+    // Encrypted USDT contract address provided by the Factory contract.
+    address public immutable USDT_ADDRESS;
+
+    constructor(address _USDT_address) {
+        _USDT_address = USDT_ADDRESS;
+    }
+
+    // ============================================================
     //                   USER ENCRYPTED DATA MANAGEMENT
     // ============================================================
 
@@ -66,7 +77,7 @@ contract Factory {
         uint256 nonce_ = idNonce[msg.sender];
         idNonce[msg.sender]++;
         address _adminAddress = msg.sender;
-        Child c = new Child(_adminAddress, _transferSum, nonce_);
+        Child c = new Child(_adminAddress, _transferSum, nonce_, USDT_ADDRESS);
         transferIdMapping[_adminAddress][nonce_].ChildContractAddress = address(c);
         transferIdMapping[_adminAddress][nonce_].Created = true;
     }
@@ -81,5 +92,4 @@ contract Factory {
         require(msg.sender == transferIdMapping[_adminAddress][_nonce].ChildContractAddress, "Not permitted");
         transferIdMapping[_adminAddress][_nonce].Completed = true;
     }
-
 }

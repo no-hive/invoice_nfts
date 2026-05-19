@@ -29,19 +29,20 @@ contract Child {
     // Expected transfer amount from the payer.
     uint256 public immutable TRANSFER_SUM;
 
-    // Encrypted USDT contract address provided by the Factory contract.
-    address public immutable USDT_ADDRESS = address(0);
+    // USDT contract address provided by the Factory contract.
+    address public immutable USDT_ADDRESS;
 
     // Parent Factory contract address.
     address public immutable FACTORY_ADDRESS;
 
     // Initializes a new Child transfer contract with the data
     // provided by the depolyer - Factory contract.
-    constructor(address _adminAddress, uint256 _transferSum, uint256 _idNonce) {
+    constructor(address _adminAddress, uint256 _transferSum, uint256 _idNonce, address _USDTAddress) {
         ADMIN_ADDRESS = _adminAddress;
         TRANSFER_SUM = _transferSum;
         ID_NONCE = _idNonce;
         FACTORY_ADDRESS = msg.sender;
+        _USDTAddress = USDT_ADDRESS;
     }
 
     // This function is called by the payer to complete the transfer.
@@ -55,7 +56,7 @@ contract Child {
     function Deposit(uint256 amount) external {
         require(transferMade == false, "Transfer already made");
         require(amount == TRANSFER_SUM, "Deposit the right amount");
-        // IERC20(USDT_ADDRESS).safeTransferFrom(msg.sender, ADMIN_ADDRESS, amount);
+        IERC20(USDT_ADDRESS).safeTransferFrom(msg.sender, ADMIN_ADDRESS, amount);
         transferMade = true;
         IFactory(FACTORY_ADDRESS).updateStatus(ADMIN_ADDRESS, ID_NONCE);
     }

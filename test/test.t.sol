@@ -3,10 +3,12 @@ pragma solidity ^0.8.4;
 import "forge-std/Test.sol";
 import {Factory} from "src/factory.sol";
 import {Child} from "src/child.sol";
+import {ExampleToken} from "src/example_token.sol";
 
 contract FactoryTest is Test {
     Factory public factory;
     Child public child;
+    ExampleToken public exampleToken;
 
     // test variables
     address ADMIN = address(1);
@@ -14,13 +16,15 @@ contract FactoryTest is Test {
     uint256 TEST_AMOUNT = 100000000;
 
     function setUp() public {
-        factory = new Factory();
+        exampleToken = new ExampleToken(ADMIN);
+        address exampleToken_address = address(exampleToken);
+        factory = new Factory(exampleToken_address);
     }
 
     function testChildTransferIsCreated() public {
         vm.startPrank(ADMIN);
         factory.createTransfer(TEST_AMOUNT);
-        (bool created,,,) = factory.transferIdMapping(ADMIN, 0);
+        (bool created,,) = factory.transferIdMapping(ADMIN, 0);
         assertEq(created, true);
         vm.stopPrank();
     }
@@ -28,13 +32,13 @@ contract FactoryTest is Test {
     function testChildAdmin() public {
         vm.startPrank(ADMIN);
         factory.createTransfer(TEST_AMOUNT);
-        (,,, address childAddr) = factory.transferIdMapping(ADMIN, 0);
-        Child child = Child(childAddr);
+        (,, address childAddr) = factory.transferIdMapping(ADMIN, 0);
+        child = Child(childAddr);
         assertEq(child.ADMIN_ADDRESS(), ADMIN);
         vm.stopPrank();
     }
 
-    // unction testChildDeploysAndWorks() public {
+    // function testChildDeploysAndWorks() public {
     //  vm.startPrank(ADMIN);
 
     // factory.createTransfer(TEST_AMOUNT);
