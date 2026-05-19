@@ -17,6 +17,8 @@ contract FactoryTest is Test {
     address ADMIN = address(1);
     address NOT_ADMIN = address(2);
     uint256 TEST_AMOUNT = 100000000;
+    string TEST_NAME = "tester";
+    string TEST_ADDRESS = "house";
 
     // ============================================================
     //                   TEST ENVIRONMENT SETUP
@@ -86,6 +88,38 @@ contract FactoryTest is Test {
         // Step 5: Check that Factory marked transfer as completed
         (, bool completed,) = factory.transferIdMapping(ADMIN, 0);
         assertEq(completed, true);
+        vm.stopPrank();
+    }
+
+    // ============================================================
+    //              TEST # 4: USER CHANGES NAME
+    // ============================================================
+
+    function testNameChanges() public {
+        // start acting as a user;
+        vm.startPrank(ADMIN);
+        // inscript new name into the mapping using special function
+        factory.updateUserDataEncryptedName(TEST_NAME);
+        // get the saved name
+        (string memory savedName,) = factory.userDataMapping(ADMIN);
+        // check if the saved name == the input
+        assertEq(savedName, TEST_NAME);
+        vm.stopPrank();
+    }
+
+    // ============================================================
+    //              TEST # 5: USER CHANGES ADDRESS
+    // ============================================================
+
+    function testAddressChanges() public {
+        // start acting as a user;
+        vm.startPrank(ADMIN);
+        // inscript new Addresse into the mapping using special function
+        factory.updateUserDataEncryptedAddress(TEST_ADDRESS);
+        // get the saved Address
+        (, string memory savedAddress) = factory.userDataMapping(ADMIN);
+        // check if the saved Address == the input
+        assertEq(savedAddress, TEST_ADDRESS);
         vm.stopPrank();
     }
 }

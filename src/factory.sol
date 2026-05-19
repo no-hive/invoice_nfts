@@ -25,7 +25,7 @@ contract Factory {
     }
 
     // Maps user address to their encrypted personal data.
-    mapping(address => UserData) userDataMapping;
+    mapping(address => UserData) public userDataMapping;
 
     // ============================================================
     //                TRANSFER / CHILD CONTRACT DATA
