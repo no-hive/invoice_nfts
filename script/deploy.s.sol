@@ -7,6 +7,8 @@ import {Script} from "forge-std/Script.sol";
 import {Child} from "../src/child.sol";
 import {Factory} from "../src/factory.sol";
 
+address constant USDT_ADDRESS = 0xdAC17F958D2ee523a2206206994597C13D831ec7;
+
 contract FactoryScript is Script {
     Factory public factory;
 
@@ -15,7 +17,7 @@ contract FactoryScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        factory = new Factory();
+        factory = new Factory(USDT_ADDRESS);
 
         vm.stopBroadcast();
     }
